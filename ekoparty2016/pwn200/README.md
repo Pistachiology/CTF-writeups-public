@@ -38,4 +38,18 @@ Partial RELRO   No canary found   NX enabled    No PIE          No RPATH   No RU
 ![pwn](image/pwn.png)
 # EN
 
-(TODO)
+> you need to solve `Fuckzing reverse` before playing this challenge
+
+After reverse the program we'll see that program receive input with function `read(stdin, rbp-0x150, 0x12C`
+![alt text](image/read.png)
+
+and here's we also see `memcpy(rbp-0x20, rbp-0x150+0x64, 0xc8)` which provide bufferoverflow and there's no stack canary so you can do ROP Chain easily. 
+
+![memcpy](image/memcpy.png)
+However, this challenge don't have ASLR so we can do either bruteforce to find libc address or leak GOT address to find libc. (This write-up use leak GOT technique.)
+and after ROP Chain with some stack-pivot and leak-libc we'll get shell. (luckily, challenge server use same libc as localserver so I don't need to find)
+
+![pwn](image/pwn.png)
+
+> We write this write-up challenge server shutdown so we'll use local server instead.
+
