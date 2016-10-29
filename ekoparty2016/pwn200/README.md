@@ -29,7 +29,7 @@ Partial RELRO   No canary found   NX enabled    No PIE          No RPATH   No RU
 ในโปรแกรมนี้นั้นเมื่อทำการ reverse ดูแล้วจะเห็นว่า code นี้ได้มีการรับข้อมูลด้วยคำสั่ง `read(stdin, rbp-0x150, 0x12C)`
 ![alt text](image/read.png)
 
-และในรูปที่สองจะเห็นได้ว่ามีการทำ `memcpy(rbp-0x20, rbp-0x150+0x64, 0xc8)` เกิดขึ้น ซึ่งจะเห็นได้ชัดเจนว่ามีการเกิด buffer overflow ขึ้น และจาก binary จะเห็นได้ว่าไม่มี stack canary มาป้องกัน
+และในรูปที่สองจะเห็นได้ว่ามีการทำ `memcpy(rbp-0x20, rbp-0x150+0x64, 0xc8)` ซึ่งจะเห็นได้ชัดเจนว่ามีการเกิด bufferoverflow ขึ้น และจาก binary จะเห็นได้ว่าไม่มี stack canary ป้องกัน
 ทำให้เราสามารถทำ ROP Chain ได้เลย และจากโจทย์บอกอีกว่า ASLR Disabled ทำให้เราสามารถ bruteforce หา address ของคำสั่ง system ได้เลยเช่นกัน หรือถ้าไม่ bruteforce ก็สามารถ leak address libc ออกมาได้เลย ซึ่งในที่นี้ได้ใช้วิธีการ leak libc โดยวิธีการนั้นสามารถดูได้ใน code และหลังจากการ reverse จะเห็นว่าก่อนที่จะทำ memcpy ได้นั้นจำเป็นต้องผ่านโจทย์ `Fuckzing reverse` ก่อน.
 
 ![memcpy](image/memcpy.png)
